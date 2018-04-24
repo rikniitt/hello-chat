@@ -18,7 +18,7 @@ Vagrant.configure("2") do |config|
     sed -i -e 's/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/' /etc/php/7.0/fpm/php.ini
     systemctl restart php7.0-fpm
     mv /etc/nginx/sites-available/default /home/ubuntu/nginx.default.site.conf
-    cat > /etc/nginx/sites-available/default <<EOL
+    cat > /etc/nginx/sites-available/default <<'EOL'
 server {
     listen 80 default_server;
     listen [::]:80 default_server;
@@ -29,10 +29,10 @@ server {
     server_name _;
 
     location / {
-        try_files \$uri \$uri/ =404;
+        try_files $uri $uri/ =404;
     }
 
-    location ~ \.php\$ {
+    location ~ \.php$ {
         include snippets/fastcgi-php.conf;
         fastcgi_pass unix:/run/php/php7.0-fpm.sock;
     }
@@ -44,7 +44,7 @@ server {
     location /websocket/ {
         proxy_pass http://localhost:8080;
         proxy_http_version 1.1;
-        proxy_set_header Upgrade \$http_upgrade;
+        proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection "Upgrade";
     }
 }

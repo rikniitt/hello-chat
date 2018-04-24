@@ -3,10 +3,10 @@ Hello Chat
 
 Hello world chat web application implemented with PHP and Ratchet.
 
-# Install
+### Install
 
  * Use `vagrant up` or see *Vagrantfile* for instructions
 
-# Development
+### Development
 
  * Start the chat server `php chat-server.php`
