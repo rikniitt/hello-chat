@@ -1,0 +1,13 @@
+{
+    "require": {
+        "php": "^7.0",
+        "cboden/ratchet": "0.4.1",
+        "silex/silex": "2.2.4",
+        "twig/twig": "2.4.8"
+    },
+    "autoload": {
+        "psr-4": {
+            "": "src/"
+        }
+    }
+}

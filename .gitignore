@@ -1,0 +1,6 @@
+composer.phar
+composer.lock
+.vagrant/
+ubuntu-*.log
+*~
+vendor/
