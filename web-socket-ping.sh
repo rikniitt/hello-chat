@@ -15,6 +15,5 @@ curl --verbose \
      --header "Upgrade: websocket" \
      --header "Host: $WS_URI" \
      --header "Origin: http://$WS_URI$WS_PATH" \
-\ #     --header "Sec-WebSocket-Key: SGVsbG8sIHdvcmxkIQ==" \
      --header "Sec-WebSocket-Version: 13" \
      http://"$WS_URI$WS_PATH"

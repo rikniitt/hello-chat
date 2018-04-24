@@ -4,10 +4,5 @@
 </head>
 <body>
     {% block content %}{% endblock %}
-    <script>
-    var conn = new WebSocket('ws://localhost:8080/websocket/echo');
-    conn.onmessage = function(e) { console.log(e.data); };
-    conn.onopen = function(e) { conn.send('Hello Me!'); };
-    </script>
 </body>
 </html>

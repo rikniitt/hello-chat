@@ -2,4 +2,47 @@
 
 {% block content %}
     <h1>Hello Chat</h1>
+
+    <ul id="messages">
+    </ul>
+
+    <p>
+        <input type="text" id="js-message-content" />
+        <button id="js-send-message">send</button>
+    </p>
+
+    <script>
+        var connection = new WebSocket('ws://localhost:8080/websocket/chat');
+
+        function renderMessage(msg) {
+            var li = document.createElement('li');
+            li.innerText = msg;
+            document.querySelector('#messages').appendChild(li);
+        }
+
+        function sendMessage() {
+            var input = document.querySelector('#js-message-content')
+            renderMessage(input.value)
+            connection.send(input.value);
+            input.value = '';
+        }
+
+        connection.onopen = function(e) {
+            console.log('Connection established!');
+        };
+        connection.onmessage = function(e) {
+            console.log(e.data);
+            renderMessage(e.data);
+        };
+
+        document.querySelector('#js-send-message').addEventListener('click', function(e) {
+            sendMessage();
+        });
+        document.querySelector('#js-message-content').addEventListener('keyup', function(e) {
+            e.preventDefault();
+            if (e.keyCode === 13) {
+                sendMessage();
+            }
+        });
+    </script>
 {% endblock %}
