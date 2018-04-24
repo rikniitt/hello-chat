@@ -9,5 +9,3 @@ $app = new Ratchet\App('localhost', 8080);
 $app->route('/websocket/chat', new HelloChat\WebSocket\Message\Chat());
 $app->route('/websocket/echo', new Ratchet\Server\EchoServer, ['*']);
 $app->run();
-
-
