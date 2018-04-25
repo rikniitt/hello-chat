@@ -2,18 +2,17 @@
 <head>
     <title>{% block title %}Hello Chat{% endblock %}</title>
     <style>
-        body {height: 100%; width: 100%; margin:0; padding:0; font-family: monospace; color: #9DE55F; background-color: #020204;}
+        body {height: 100%; width: 100%; margin:0; padding:0; font-family: monospace; color: #FFA843; background-color: #020204;}
         article {position: absolute; top: 0; left: 0; height: 97%; width: 100%; overflow: auto;}
         article::-webkit-scrollbar {display: none;}
         article h1 {margin:0;}
         article ul {list-style: none; margin: 0;padding: 0;}
-        article ul li.message-out {font-weight: 900;}
+        article ul li.message-out {font-weight: 900; color: #9DE55F}
         article li.message-out:before {content: "\27a5";}
         article li.message-in:before {content: "\0000a0";}
         footer {position: fixed; bottom: 0; width: 100%; height: 3%; min-height: 1.2em;}
-        footer input[type="text"],
-        footer textarea {width: 90%; height: 100%; margin: 0; float:left; background-color: #1B1A20; color: #FFA843;border: none;}
-        footer button {width: 10%; height: 100%; margin: 0; float: left; background-color: #F63B46; color: #020204; border: none;}
+        footer textarea {width: 90%; height: 100%; margin: 0; float:left; background-color: #1B1A20; color: #9DE55F;border: none;}
+        footer button {width: 10%; height: 100%; margin: 0; float: left; background-color: #FFA843; color: #020204; border: none;}
     </style>
 </head>
 <body>
