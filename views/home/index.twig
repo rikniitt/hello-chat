@@ -1,48 +1,58 @@
 {% extends 'layout/master.twig' %}
 
 {% block content %}
-    <h1>Hello Chat</h1>
+    <article>
+        <h1>Hello Chat</h1>
+        <ul id="messages"></ul>
+    </article>
 
-    <ul id="messages">
-    </ul>
-
-    <p>
-        <input type="text" id="js-message-content" />
-        <button id="js-send-message">send</button>
-    </p>
+    <footer>
+        <input type="text" id="js-message-content" placeholder="Type something..." />
+        <button id="js-send-message">&#9993; send</button>
+    </footer>
 
     <script>
         var connection = new WebSocket('ws://localhost:8080/websocket/chat');
 
-        function renderMessage(msg) {
+        function scrollToBottom() {
+            var article = document.querySelector('article');
+            article.scrollTop = article.scrollHeight;
+        }
+
+        function renderMessage(msg, goingOut) {
             var li = document.createElement('li');
             li.innerText = msg;
+            li.className = (goingOut) ? 'message-out' : 'message-in';
             document.querySelector('#messages').appendChild(li);
+            scrollToBottom();
         }
 
         function sendMessage() {
-            var input = document.querySelector('#js-message-content')
-            renderMessage(input.value)
-            connection.send(input.value);
-            input.value = '';
+            var input = document.querySelector('#js-message-content');
+            if (input.value) {
+                console.log('Out: ' + input.value);
+                renderMessage(input.value, true);
+                connection.send(input.value);
+                input.value = '';
+            }
         }
 
         connection.onopen = function(e) {
             console.log('Connection established!');
         };
         connection.onmessage = function(e) {
-            console.log(e.data);
+            console.log('In: ' + e.data);
             renderMessage(e.data);
         };
 
-        document.querySelector('#js-send-message').addEventListener('click', function(e) {
-            sendMessage();
-        });
+        window.addEventListener('resize', scrollToBottom);
+        document.querySelector('#js-send-message').addEventListener('click', sendMessage);
         document.querySelector('#js-message-content').addEventListener('keyup', function(e) {
             e.preventDefault();
             if (e.keyCode === 13) {
                 sendMessage();
             }
         });
+        document.querySelector('#js-message-content').focus();
     </script>
 {% endblock %}
