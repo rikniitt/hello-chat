@@ -38,4 +38,8 @@ class Clients
         return $this;
     }
 
+    public function size()
+    {
+        return $this->storage->count();
+    }
 }

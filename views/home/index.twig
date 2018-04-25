@@ -7,7 +7,8 @@
     </article>
 
     <footer>
-        <input type="text" id="js-message-content" placeholder="Type something..." />
+        <!--<input type="text" id="js-message-content" placeholder="Type something..." />-->
+        <textarea id="js-message-content" placeholder="Type something..." style="resize:none;"></textarea>
         <button id="js-send-message">&#9993; send</button>
     </footer>
 
@@ -29,12 +30,13 @@
 
         function sendMessage() {
             var input = document.querySelector('#js-message-content');
-            if (input.value) {
-                console.log('Out: ' + input.value);
-                renderMessage(input.value, true);
-                connection.send(input.value);
-                input.value = '';
+            var msg = input.value.trim();
+            if (msg) {
+                console.log('Out: ' + msg);
+                renderMessage(msg, true);
+                connection.send(msg);
             }
+            input.value = '';
         }
 
         connection.onopen = function(e) {

@@ -23,18 +23,26 @@ class Chat implements MessageComponentInterface
     {
         $this->clients->add($client);
 
+        $client->send(' ** Currently ' . $this->clients->size() . ' clients connected **');
+
         foreach ($this->messages->getAll() as $oldMessage) {
             $client->send($oldMessage);
         }
+
+        $this->clients->each(function($other) use ($client) {
+            if ($other !== $client) {
+                $other->send(' ** New client joined **');
+            }
+        });
     }
 
-    public function onMessage(ConnectionInterface $from, $message)
+    public function onMessage(ConnectionInterface $client, $message)
     {
         $this->messages->add($message);
 
-        $this->clients->each(function($client) use ($from, $message) {
-            if ($client !== $from) {
-                $client->send($message);
+        $this->clients->each(function($other) use ($client, $message) {
+            if ($other !== $client) {
+                $other->send($message);
             }
         });
     }
@@ -42,6 +50,10 @@ class Chat implements MessageComponentInterface
     public function onClose(ConnectionInterface $client)
     {
         $this->clients->remove($client);
+
+        $this->clients->each(function($other) {
+            $other->send(' ** Some client disconnected **');
+        });
     }
 
     public function onError(ConnectionInterface $connection, Exception $e)
